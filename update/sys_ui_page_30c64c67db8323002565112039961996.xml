@@ -14,8 +14,15 @@ jQuery('#myAjaxButton').click(function() {
 
 function myCallBack(response) {
 	var answer = response.responseXML.documentElement.getAttribute('answer');
-	alert("hello from my Callback !!");
-	jQuery('#ajax_response_message').append('<p>' + answer[0] + 'has been successfully created.');
+	jQuery('#ajax_response_message').append("<div>hello from my Callback !!</div>")
+								    .append('<p>' + answer + 'has been successfully created.');
+	var jsonAnswer = JSON.parse(answer);
+	jQuery('#ajax_response_message').append("<div>------------------------------------</div>")
+								.append("<div>FirstName: " + jsonAnswer["First name"] + "</div>")
+								.append("<div>Gender   : " + jsonAnswer["Gender"] + "</div>")
+								.append("<div>LastName : " + jsonAnswer["Last name"] + "</div>")
+								.append("<div>Terms    : " + jsonAnswer["Read Terms and Conditions"] + "</div>");
+		
 }
 
 ]]></client_script>
@@ -25,7 +32,7 @@ function myCallBack(response) {
         <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
 <j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
 	<div>Hello World From MYPDF_UI_Page.</div>
-	<div>.</div>
+	<div><br></br></div>
 	<div><button id="myAjaxButton" class="btn btn-default">Click Me To Make AJAX Call</button></div>
 	
 	<div id="ajax_response_message"></div>
@@ -36,13 +43,13 @@ function myCallBack(response) {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2019-01-22 19:13:12</sys_created_on>
         <sys_id>30c64c67db8323002565112039961996</sys_id>
-        <sys_mod_count>18</sys_mod_count>
+        <sys_mod_count>28</sys_mod_count>
         <sys_name>MyPDF_UI_Page</sys_name>
         <sys_package display_value="MyPDFTutorial" source="x_237223_mypdftuto">4ba5c463db832300256511203996194e</sys_package>
         <sys_policy/>
         <sys_scope display_value="MyPDFTutorial">4ba5c463db832300256511203996194e</sys_scope>
         <sys_update_name>sys_ui_page_30c64c67db8323002565112039961996</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2019-01-23 14:07:59</sys_updated_on>
+        <sys_updated_on>2019-01-23 15:11:13</sys_updated_on>
     </sys_ui_page>
 </record_update>
