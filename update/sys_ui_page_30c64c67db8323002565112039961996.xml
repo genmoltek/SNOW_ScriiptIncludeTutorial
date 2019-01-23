@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_ui_page">
+    <sys_ui_page action="INSERT_OR_UPDATE">
+        <category>general</category>
+        <client_script><![CDATA[//NOTE jQuery MUST START WITH A LOWER-CASE 'j'
+jQuery('#myAjaxButton').click(function() {
+	//alert("hello from my Button click!");
+	var nameOfScriptInclude = "MyPDFGenerationServerSideScript";
+	var methodOfScriptInclude = "makeMyPDF";
+	var ga = new GlideAjax(nameOfScriptInclude);
+	ga.addParam('sysparm_name',methodOfScriptInclude);
+	ga.getXML(myCallBack);
+});
+
+function myCallBack(response) {
+	var answer = response.responseXML.documentElement.getAttribute('answer');
+	alert("hello from my Callback !!");
+	jQuery('#ajax_response_message').append('<p>' + answer[0] + 'has been successfully created.');
+}
+
+]]></client_script>
+        <description/>
+        <direct>false</direct>
+        <endpoint>x_237223_mypdftuto_MyPDF_UI_Page.do</endpoint>
+        <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+	<div>Hello World From MYPDF_UI_Page.</div>
+	<div>.</div>
+	<div><button id="myAjaxButton" class="btn btn-default">Click Me To Make AJAX Call</button></div>
+	
+	<div id="ajax_response_message"></div>
+</j:jelly>]]></html>
+        <name>MyPDF_UI_Page</name>
+        <processing_script/>
+        <sys_class_name>sys_ui_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2019-01-22 19:13:12</sys_created_on>
+        <sys_id>30c64c67db8323002565112039961996</sys_id>
+        <sys_mod_count>18</sys_mod_count>
+        <sys_name>MyPDF_UI_Page</sys_name>
+        <sys_package display_value="MyPDFTutorial" source="x_237223_mypdftuto">4ba5c463db832300256511203996194e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="MyPDFTutorial">4ba5c463db832300256511203996194e</sys_scope>
+        <sys_update_name>sys_ui_page_30c64c67db8323002565112039961996</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2019-01-23 14:07:59</sys_updated_on>
+    </sys_ui_page>
+</record_update>

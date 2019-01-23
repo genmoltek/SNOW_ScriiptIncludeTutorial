@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>x_237223_mypdftuto.MyPDFGenerationServerSideScript</api_name>
+        <client_callable>true</client_callable>
+        <description>Server Side Script that can be called from the Client Side... (via AJAX)</description>
+        <name>MyPDFGenerationServerSideScript</name>
+        <script><![CDATA[var MyPDFGenerationServerSideScript = Class.create();
+MyPDFGenerationServerSideScript.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+	makeMyPDF: function() {
+			gs.addInfoMessage("My ScriptInclude1");
+		    var my2ndScript = new MySecondScriptInclude();
+			my2ndScript.helloWorld();
+	},
+	
+	type: 'MyPDFGenerationServerSideScript'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2019-01-22 19:33:58</sys_created_on>
+        <sys_id>0c4a0ca7db832300256511203996199f</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>MyPDFGenerationServerSideScript</sys_name>
+        <sys_package display_value="MyPDFTutorial" source="x_237223_mypdftuto">4ba5c463db832300256511203996194e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="MyPDFTutorial">4ba5c463db832300256511203996194e</sys_scope>
+        <sys_update_name>sys_script_include_0c4a0ca7db832300256511203996199f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2019-01-23 14:11:28</sys_updated_on>
+    </sys_script_include>
+</record_update>
