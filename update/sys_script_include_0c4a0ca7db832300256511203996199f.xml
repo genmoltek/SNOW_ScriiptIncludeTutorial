@@ -7,24 +7,73 @@
         <client_callable>true</client_callable>
         <description>Server Side Script that can be called from the Client Side... (via AJAX)</description>
         <name>MyPDFGenerationServerSideScript</name>
-        <script><![CDATA[var MyPDFGenerationServerSideScript = Class.create();
+        <script><![CDATA[var SNOWTableId     = "d71f7935c0a8016700802b64c67c11c6"; //had to explicitly look up.  
+					//Each Record in every table has a globally world-wide unique ID.
+					//Navigation Search on  'incident'
+                    //Click on Self-Service
+					//Then click on the blue filter for 'ALL' which eliminates filter to see all records.
+					//Sort records, click link on record, find sysid url parameter value
+
+var SNOWTableName   = "incident";
+var attachmentSysId = "";
+var PDFFileName     = "my-completed-form.pdf";
+var dateTimeNow     =  new GlideDateTime().getDisplayValue();
+
+gs.addInfoMessage("The DateTime is: " + dateTimeNow);
+
+var MyPDFGenerationServerSideScript = Class.create();
 MyPDFGenerationServerSideScript.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
-	makeMyPDF: function() {
-			gs.addInfoMessage("Inside MyPDFGenerationServerSideScript.makeMyPDF() ...");
-		    //var my2ndScript = new MySecondScriptInclude();
-			//my2ndScript.helloWorld();
+
+	testScriptCallingScript: function() {
+			gs.addInfoMessage("Inside MyPDFGenerationServerSideScript.testScriptCallingScript() ...");
+		    var my2ndScript = new MySecondScriptInclude();
+			my2ndScript.helloWorld();
+			return 'success';
+	},
+
+	
+	getMyPDFFields: function() {
+			gs.addInfoMessage("Inside getMyPDFFields() ...");
 			var pdf = new global.GeneralPdfUtils();
-			// Sys ID of a PDF form attached to any record
-			var attachmentSysId = 'c6444863db83230025651120399619c9';
-		    //--------------------------------------------------
-		    //The call to JSON.parse makes an in-memory object
-		    //--------------------------------------------------
-			//var fieldsString = pdf.getPDFFields(attachmentSysId);
-			//var fields = JSON.parse(fieldsString);  
-		    var fieldTypesString = pdf.getFieldType(attachmentSysId);
-			//var fieldTypes = JSON.parse(fieldTypesString);
-		    gs.addInfoMessage("JSON: " + fieldTypesString);
+		    attachmentSysId = this.getParameter('sysparm_pdf_rec_id');
+			var fieldsJsonString = pdf.getPDFFields(attachmentSysId);
+		    gs.addInfoMessage("JSON FIELDS: " + fieldsJsonString);
 			return fieldTypesString;
+	},
+
+	getMyPDFDetails: function() {
+			gs.addInfoMessage("Inside getMyPDFDetails() ...");
+			var pdf = new global.GeneralPdfUtils();
+		    attachmentSysId = this.getParameter('sysparm_pdf_rec_id');
+		    var fieldTypesString = pdf.getFieldType(attachmentSysId);
+		    gs.addInfoMessage("JSON DETAILS: " + fieldTypesString);
+			return fieldTypesString;
+	},
+	
+	fillInPDF: function() {
+			gs.addInfoMessage("Inside FillInPDF() ...");
+		
+			var pdf = new global.GeneralPdfUtils();
+		
+		    var attachmentSysId     = this.getParameter('sysparm_pdf_rec_id');
+		    var dynamicTermsChecked = this.getParameter('sysparm_dynamicTermsChecked');
+		    var dynamicFirstName    = this.getParameter('sysparm_dynamicFirstName');
+		    var dynamicGender       = this.getParameter('sysparm_dynamicGender');
+		    var dynamicLastName     = this.getParameter('sysparm_dynamicLastName');
+		
+		    var jsonObject = {
+				"Read Terms and Conditions": dynamicTermsChecked,
+				"First name": dynamicFirstName,
+				"Gender": dynamicGender,
+				"Last name": dynamicLastName
+			};
+		
+			var jsonString = JSON.stringify(jsonObject);
+			gs.addInfoMessage("Stringified JSON: " + jsonString);
+			pdf.prefillPdf(jsonString, SNOWTableId, attachmentSysId, SNOWTableName, PDFFileName);
+		
+		
+			return "answer:{'success':'true'}";
 	},
 	
 	type: 'MyPDFGenerationServerSideScript'
@@ -33,13 +82,13 @@ MyPDFGenerationServerSideScript.prototype = Object.extendsObject(global.Abstract
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2019-01-22 19:33:58</sys_created_on>
         <sys_id>0c4a0ca7db832300256511203996199f</sys_id>
-        <sys_mod_count>14</sys_mod_count>
+        <sys_mod_count>24</sys_mod_count>
         <sys_name>MyPDFGenerationServerSideScript</sys_name>
         <sys_package display_value="MyPDFTutorial" source="x_237223_mypdftuto">4ba5c463db832300256511203996194e</sys_package>
         <sys_policy/>
         <sys_scope display_value="MyPDFTutorial">4ba5c463db832300256511203996194e</sys_scope>
         <sys_update_name>sys_script_include_0c4a0ca7db832300256511203996199f</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2019-01-23 15:04:19</sys_updated_on>
+        <sys_updated_on>2019-01-24 15:22:56</sys_updated_on>
     </sys_script_include>
 </record_update>
